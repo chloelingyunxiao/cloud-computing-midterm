@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# CDK
+cdk.out/
+.cdk.staging/
+
+# Lambda response output
+response.json
+
+*.txt
+Demo-Notes.md
