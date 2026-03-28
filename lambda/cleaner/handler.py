@@ -37,11 +37,11 @@ def lambda_handler(event, context):
 
     print(f"Found {len(items)} disowned copies to delete.")
 
-    # 3. Delete each copy from Dst bucket, then update DynamoDB
+    # delete each copy from Dst bucket, then update DynamoDB
     for item in items:
         copy_key = item["copy_key"]
 
-        # Delete from S3
+        # delete from S3
         try:
             s3.delete_object(Bucket=DST_BUCKET, Key=copy_key)
             print(f"Deleted from S3: {copy_key}")
@@ -50,8 +50,8 @@ def lambda_handler(event, context):
             print(f"ERROR deleting {copy_key} from S3: {e}")
             continue
 
-        # 4. Update status to DELETED and remove disowned_at so the item
-        #    no longer appears in the DisownedIndex GSI on future Cleaner runs
+        # update status to DELETED and remove disowned_at so the item
+        # no longer appears in the DisownedIndex GSI on future Cleaner runs
         deleted_at = (
             datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
         )

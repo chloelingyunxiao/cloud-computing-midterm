@@ -32,8 +32,7 @@ class ReplicatorStack(Stack):
         bucket_dst.grant_read_write(fn)
         table.grant_read_write_data(fn)
 
-        # Use EventBridge instead of direct S3 notifications to avoid cross-stack
-        # cyclic dependency (bucket is in StorageStack, Lambda is in ReplicatorStack)
+        # EventBridge rule: listen for Object Created/Deleted events from BucketSrc and trigger Replicator Lambda
         rule = events.Rule(self, "S3SrcEvents",
             event_pattern=events.EventPattern(
                 source=["aws.s3"],

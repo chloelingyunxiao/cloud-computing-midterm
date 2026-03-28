@@ -30,7 +30,7 @@ class CleanerStack(Stack):
         bucket_dst.grant_delete(fn)
         table.grant_read_write_data(fn)
 
-        # EventBridge rule: trigger Cleaner every 1 minute
+        # EventBridge scheduled rule: trigger Cleaner Lambda every 1 minute
         rule = events.Rule(self, "EveryMinute",
             schedule=events.Schedule.rate(Duration.minutes(1)),
         )
